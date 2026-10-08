@@ -56,7 +56,7 @@ Run the automated tests: `cd backend && npm test` (20 integration tests, in-memo
 | [docs/API.md](docs/API.md) | Every REST endpoint, roles, payloads, Socket.IO events |
 | [docs/DATABASE.md](docs/DATABASE.md) | ER diagram, collections, indexes, integrity rules, backup/restore |
 | [docs/SECURITY.md](docs/SECURITY.md) | Threat model, controls, GDPR, production checklist |
-| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Setup, environment variables, nginx/PM2, scaling, monitoring |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Setup, environment variables, **hosting on Render**, nginx/PM2, scaling, monitoring |
 | [docs/TESTING.md](docs/TESTING.md) | Test strategy, manual E2E script, security & accessibility checklists |
 | [docs/UI_DESIGN_SYSTEM.md](docs/UI_DESIGN_SYSTEM.md) | Design tokens, components, wireframes, floor-plan layouts, Tailwind guidelines |
 | [docs/REQUIREMENTS_TRACEABILITY.md](docs/REQUIREMENTS_TRACEABILITY.md) | Every requirement of the project brief → implementation → evidence |

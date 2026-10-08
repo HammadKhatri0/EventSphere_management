@@ -100,6 +100,29 @@ server {
 }
 ```
 
+## 5a. Quick hosting on Render (free tier, single service)
+
+In production the Node API also serves the built React app, so one service hosts everything (same origin: no CORS or cross-site cookie issues, WebSockets work). `render.yaml` at the repository root describes it.
+
+1. **Push the code to GitHub** (already done for this repo).
+2. **MongoDB Atlas → Network Access → Add IP address → "Allow access from anywhere" (`0.0.0.0/0`).** Render's outgoing IPs change, so a fixed allow-list will not work. (Use a strong database password.)
+3. On <https://render.com>: **New → Blueprint** → select the GitHub repo → Render reads `render.yaml`.
+4. Fill in the secrets Render asks for (they are never stored in the repo):
+
+| Variable | Value |
+|---|---|
+| `mongo_uri` | your Atlas connection string (standard `mongodb://…` form works best) |
+| `CLIENT_URL` | the service URL, e.g. `https://eventsphere.onrender.com` (also used in password-reset links) |
+| `ORGANIZER_INVITE_CODE` | a secret code for organizer sign-ups |
+| `CLOUD_NAME`, `CLOUD_API_KEY`, `CLOUD_API_SECRET` | Cloudinary credentials |
+| `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` | e.g. Mailtrap (testing) or a real provider (Brevo/SendGrid) for production |
+
+   `JWT_ACCESS_SECRET` and `JWT_REFRESH_SECRET` are generated automatically.
+5. **Deploy.** The build runs `npm ci && npm run build` for the frontend and installs the backend; the health check is `/api/health`. Open the URL → landing page → log in.
+6. **Seed demo data** (only if the database is empty): in Render → *Shell* run `cd backend && npm run seed`, or run `npm run seed` locally against the same Atlas database.
+
+Notes for the free tier: the service sleeps after ~15 minutes without traffic and the first request afterwards takes about a minute; real-time features need the service awake. Uploads are safe because they live on Cloudinary, not on the server's disk. Any other Node host (Railway, Fly.io, a VPS with PM2 + nginx as in §5) works the same way: build the frontend, start `backend/src/server.js`, set the same environment variables, and keep `CLIENT_URL` equal to the public URL.
+
 ## 6. Scaling out (hundreds → thousands of concurrent users)
 
 | Layer | How it scales |
