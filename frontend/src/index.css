@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Design tokens (WCAG AA verified pairs) ---------- */
+:root {
+  --c-bg: #f5f6fa;
+  --c-surface: #ffffff;
+  --c-surface-2: #f1f3f9;
+  --c-line: #dfe3ee;
+  --c-fg: #0f172a;
+  --c-muted: #53607a;
+  --c-primary: #4f46e5;
+  --c-primary-hover: #4338ca;
+  --c-primary-text: #4338ca;
+  --c-primary-soft: #eef2ff;
+  --c-success-text: #166534; --c-success-soft: #dcfce7; --c-success: #16a34a;
+  --c-warning-text: #92400e; --c-warning-soft: #fef3c7; --c-warning: #d97706;
+  --c-danger-text: #991b1b;  --c-danger-soft: #fee2e2;  --c-danger: #dc2626;
+  --c-info-text: #1e40af;    --c-info-soft: #dbeafe;    --c-info: #2563eb;
+  --c-shadow: 0 1px 2px rgb(15 23 42 / 0.05), 0 8px 24px -12px rgb(15 23 42 / 0.12);
+  color-scheme: light;
+}
+.dark {
+  --c-bg: #0a0f1f;
+  --c-surface: #121a2f;
+  --c-surface-2: #1a2440;
+  --c-line: #28345a;
+  --c-fg: #e8ecf8;
+  --c-muted: #9aa8c7;
+  --c-primary: #4f46e5;
+  --c-primary-hover: #6366f1;
+  --c-primary-text: #a5b4fc;
+  --c-primary-soft: rgb(99 102 241 / 0.16);
+  --c-success-text: #86efac; --c-success-soft: rgb(34 197 94 / 0.14); --c-success: #22c55e;
+  --c-warning-text: #fcd34d; --c-warning-soft: rgb(245 158 11 / 0.15); --c-warning: #f59e0b;
+  --c-danger-text: #fca5a5;  --c-danger-soft: rgb(239 68 68 / 0.16);  --c-danger: #ef4444;
+  --c-info-text: #93c5fd;    --c-info-soft: rgb(59 130 246 / 0.16);   --c-info: #3b82f6;
+  --c-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-line: var(--c-line);
+  --color-fg: var(--c-fg);
+  --color-muted: var(--c-muted);
+  --color-primary: var(--c-primary);
+  --color-primary-hover: var(--c-primary-hover);
+  --color-primary-text: var(--c-primary-text);
+  --color-primary-soft: var(--c-primary-soft);
+  --color-success: var(--c-success);
+  --color-success-text: var(--c-success-text);
+  --color-success-soft: var(--c-success-soft);
+  --color-warning: var(--c-warning);
+  --color-warning-text: var(--c-warning-text);
+  --color-warning-soft: var(--c-warning-soft);
+  --color-danger: var(--c-danger);
+  --color-danger-text: var(--c-danger-text);
+  --color-danger-soft: var(--c-danger-soft);
+  --color-info: var(--c-info);
+  --color-info-text: var(--c-info-text);
+  --color-info-soft: var(--c-info-soft);
+  --shadow-card: var(--c-shadow);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { @apply bg-bg text-fg font-sans antialiased; font-size: 0.9375rem; line-height: 1.55; }
+  h1, h2, h3, h4 { letter-spacing: -0.02em; font-weight: 700; }
+  :focus-visible { outline: 3px solid var(--c-primary); outline-offset: 2px; border-radius: 6px; }
+  .dark :focus-visible { outline-color: #a5b4fc; }
+  ::selection { background: var(--c-primary); color: #fff; }
+  button, [role="button"], a { -webkit-tap-highlight-color: transparent; }
+  /* grid items may shrink below their content width (prevents wide charts/maps from forcing page overflow on phones) */
+  .grid > * { min-width: 0; }
+  /* thin, themed scrollbars */
+  * { scrollbar-width: thin; scrollbar-color: var(--c-line) transparent; }
+}
+
+@layer components {
+  .card { @apply bg-surface border border-line rounded-2xl shadow-card; }
+  .skip-link { @apply absolute left-3 -top-20 z-[100] bg-primary text-white px-4 py-2 rounded-lg font-semibold focus:top-3; }
+  .gradient-text { background: linear-gradient(120deg, #6366f1, #06b6d4 60%, #22c55e); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero-bg { background: radial-gradient(1200px 500px at 15% -10%, rgb(99 102 241 / 0.35), transparent 60%), radial-gradient(900px 400px at 95% 0%, rgb(6 182 212 / 0.25), transparent 60%), var(--c-bg); }
+  .grid-bg { background-image: linear-gradient(var(--c-line) 1px, transparent 1px), linear-gradient(90deg, var(--c-line) 1px, transparent 1px); background-size: 32px 32px; }
+}
+
+/* Honour reduced motion for any CSS transitions/animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+@keyframes booth-pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.55 } }
+.booth-pulse { animation: booth-pulse 1.2s ease-in-out infinite; }

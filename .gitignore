@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+~$*
+
+# Original eProject brief / submission forms (not part of the source code)
+EProject_Question.zip
+MERN-EventSphere_Management.docx
+Readme-Student Guide-eProject Process.txt
+eProject_Feeback_Form.xls
+eProject_Status_Report(V1).xls
