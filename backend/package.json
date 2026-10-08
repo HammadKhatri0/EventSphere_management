@@ -13,6 +13,7 @@
     "seed": "node src/seed/seed.js",
     "backup": "node src/scripts/backup.js",
     "restore": "node src/scripts/restore.js",
+    "test:email": "node src/scripts/test-email.js",
     "test": "node --test --test-concurrency=1 tests/auth.test.js tests/workflow.test.js"
   },
   "dependencies": {
