@@ -12,8 +12,11 @@ import { Avatar, IconButton } from '../ui/index.jsx';
 
 export function Logo({ className, compact, size = 'size-10' }) {
   return (
-    <span className={cn('inline-flex items-center gap-2 font-extrabold tracking-tight', className)}>
-      <img src="/logo.png" alt="" width="40" height="40" className={cn(size, 'shrink-0 object-contain drop-shadow-sm')} aria-hidden="true" />
+    <span className={cn('inline-flex items-center gap-2.5 font-extrabold tracking-tight', className)}>
+      {/* Light mode: white tile so the cyan/blue mark never melts into pale backgrounds. Night mode: the mark stands on its own. */}
+      <span className={cn(size, 'shrink-0 grid place-items-center rounded-xl p-1 bg-white ring-1 ring-slate-900/10 shadow-sm dark:bg-transparent dark:ring-0 dark:shadow-none dark:p-0')} aria-hidden="true">
+        <img src="/logo.png" alt="" width="40" height="40" className="size-full object-contain" />
+      </span>
       {!compact && <span className="text-lg">Event<span className="text-primary-text">Sphere</span></span>}
     </span>
   );
