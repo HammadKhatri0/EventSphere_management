@@ -35,7 +35,7 @@ export default function ExhibitorCard({ exhibitor, expoId, compact = false }) {
       {primary && (
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1">
           <p className="text-[13px] font-semibold flex items-center gap-1.5"><MapPin className="size-4 text-muted" aria-hidden />Booth {shownBooths.map((b) => b.code).join(', ')}</p>
-          <Link to={locateUrl(primary.expo, primary._id)} className="relative z-10 text-[13px] font-semibold text-primary-text hover:underline">Locate on floor plan</Link>
+          <Link to={locateUrl(primary.expo, primary._id)} className="relative z-10 inline-block py-1.5 text-[13px] font-semibold text-primary-text hover:underline">Locate on floor plan</Link>
         </div>
       )}
     </article>

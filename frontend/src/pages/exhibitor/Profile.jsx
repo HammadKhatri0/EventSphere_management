@@ -35,10 +35,10 @@ const tabOf = (field) => (field.startsWith('products') ? 'products' : field.star
 /** Image preview + uploader with remove. */
 function ImagePicker({ label, value, onChange, name, hint }) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
       {value ? <img src={assetUrl(value)} alt={`${label} preview`} className="size-16 rounded-xl object-cover border border-line bg-surface-2" />
         : <Avatar name={name} size="lg" square />}
-      <FileUpload label={label} kind="image" buttonText={value ? 'Replace image' : 'Upload image'} onChange={(url) => onChange(url)} value={value} hint={hint} />
+      <FileUpload className="min-w-0 flex-1 basis-44" label={label} kind="image" buttonText={value ? 'Replace image' : 'Upload image'} onChange={(url) => onChange(url)} value={value} hint={hint} />
     </div>
   );
 }

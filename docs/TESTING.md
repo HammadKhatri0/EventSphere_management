@@ -97,3 +97,21 @@ See `REQUIREMENTS_TRACEABILITY.md` for the mapping from every functional and non
 | Exhibitor | Profile save with field errors, **logo upload to Cloudinary and removal**, staff add/remove, apply to expo + withdraw, **booth reserve → live "Booth Confirmed" update from organizer**, showcase edit, inquiries accept/reply, ticket create, B2B neighbour search and chat |
 | Organizer | Application approve / reject-with-reason, floor plan (keyboard select, **mouse drag move**, release, assign), schedule create with room-conflict message, expo create/delete, analytics + CSV download, ticket reply |
 | Fixes from this pass | Phone overflow on 3 pages · "My booths" now refreshes live · inquiry badge reads "Awaiting reply" · logo/banner/avatar/website can now be removed · pan hint for the floor plan on phones |
+
+### Responsive pass (all screens, 320 / 375 / 768 / 1024 px)
+
+Every route of the public pages and the three portals was loaded at **320 px** (smallest phone), 375 px, 768 px (tablet) and, for the dense organizer screens, 1024 px, checking for horizontal page overflow, error states and undersized tap targets. Issues found and fixed:
+
+| Issue | Fix |
+|---|---|
+| Landing / public / attendee headers overflowed at 320 px (logo + palette + theme + buttons) | Compact logo on phones, "Sign in" hidden below `sm` (header keeps "Get started") |
+| Feedback table widened the whole page (hidden screen-reader text escaped the scroll container) | Table wrapper now clips its children (`relative overflow-x-auto`) |
+| Standalone text links and checkboxes below the 24 px target size | Vertical padding on links, 20 px checkboxes that no longer shrink, and a phone-only minimum link height |
+| Scroll-reveal animation could leave cards faint in full-page captures on phones | Scroll animations only run at ≥ 768 px |
+| Dense dashboards with grid children wider than the screen | `.grid > * { min-width: 0 }` globally |
+
+Re-run the same check after UI changes: open a route, set the browser to the target width, and confirm `document.documentElement.scrollWidth` equals the viewport width.
+
+### Layout stress test (fallback-font check)
+
+If the web font (Plus Jakarta Sans, loaded from Google Fonts) is blocked or slow, the browser falls back to a system font that can be noticeably wider. Every portal route was therefore also checked at **1024 px** with the very wide font *Verdana* forced on the page, scanning for children that spill out of their container and for clipped text. Fixed as a result: sidebar brand row (badge ran into the sidebar edge), attendee top bar (menu now scrolls instead of overflowing; the user name is hidden below 1280 px), stat-card numbers, the exhibitor dashboard's completeness/booth cards, and the logo uploader on the profile page. Only intentional decorative clipping remains (illustrations cropped by their cards, background glows).

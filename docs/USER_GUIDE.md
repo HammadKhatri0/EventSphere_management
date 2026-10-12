@@ -33,7 +33,7 @@ flowchart LR
 ## 1. Getting started (everyone)
 
 ### 1.1 Open the app
-Go to the address your organizer gave you (locally: `http://localhost:5173`). The landing page presents the platform and upcoming expos. Use the **sun/moon** button at any time to switch between light and dark mode — your choice is remembered.
+Go to the address your organizer gave you (locally: `http://localhost:5173`). The landing page presents the platform, the three portals and a live floor-plan preview; the header and footer link to the **About** page (what EventSphere is, how it works and what it stands for), and the footer also links to the **Privacy Policy**, **Terms of Service** and a **Help Center** with answers to common questions (no sign-in needed). Use the **sun/moon** button at any time to switch between light and dark mode — your choice is remembered.
 
 ### 1.2 Create an account
 1. Click **Get started** (or **Create an account** on the login page).
@@ -62,6 +62,7 @@ Go to the address your organizer gave you (locally: `http://localhost:5173`). Th
 | Area | What it does |
 |---|---|
 | **Sidebar** (organizer/exhibitor) or **top menu / bottom tab bar** (attendee, on phones) | Main navigation |
+| **🎨 Palette** | Choose an accent colour (Refined: Navy, Sage, Bronze, Petrol, Burgundy, Silver, Gold — or Vibrant: Indigo, Ocean, Emerald, Violet). Works with light and dark mode and is remembered on your device. |
 | **🔔 Bell** | Live notifications: approvals, reminders, messages, schedule changes. Click one to jump to the relevant page. A toast pops up when something new arrives. |
 | **Avatar menu** | Account & privacy, sign out |
 | **Skip to content** | Press **Tab** on any page to reveal it (keyboard users) |

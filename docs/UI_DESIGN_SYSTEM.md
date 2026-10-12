@@ -18,13 +18,40 @@ Defined once in `frontend/src/index.css` as CSS variables and exposed to Tailwin
 
 | Token (Tailwind class) | Light | Dark | Use |
 |---|---|---|---|
-| `bg-bg` | `#F5F6FA` | `#0A0F1F` | Page background |
-| `bg-surface` / `bg-surface-2` | `#FFFFFF` / `#F1F3F9` | `#121A2F` / `#1A2440` | Cards / subtle fills |
-| `border-line` | `#DFE3EE` | `#28345A` | Borders, dividers |
-| `text-fg` / `text-muted` | `#0F172A` / `#53607A` | `#E8ECF8` / `#9AA8C7` | Primary / secondary text (≥ 4.5:1) |
+| `bg-bg` | `#F5F6FA` | `#151822` | Page background |
+| `bg-surface` / `bg-surface-2` | `#FFFFFF` / `#F1F3F9` | `#1D212D` / `#262B39` | Cards / subtle fills |
+| `border-line` | `#DFE3EE` | `#363D52` | Borders, dividers |
+| `text-fg` / `text-muted` | `#0F172A` / `#53607A` | `#D9DDE8` / `#9AA3B8` | Primary / secondary text (≥ 4.5:1) |
 | `bg-primary` | `#4F46E5` (indigo) | `#4F46E5` | Primary actions (white text 6.3:1) |
 | `text-primary-text`, `bg-primary-soft` | `#4338CA`, `#EEF2FF` | `#A5B4FC`, indigo 16 % | Links, active nav, soft chips |
 | `success`, `warning`, `danger`, `info` (+ `-soft`, `-text`) | green / amber / red / blue | lighter text on translucent fills | Status feedback |
+
+### Colour palettes
+
+On top of light/dark there are eleven accent palettes in two families, chosen with the 🎨 button in every header (landing, login, all three portals). The choice is saved on the device and applied before first paint.
+
+**Refined** — muted, premium tones (low saturation, calmer night modes):
+
+| Palette | Primary (button) | Feel |
+|---|---|---|
+| Navy | `#1F3A5F` | classic corporate, trustworthy |
+| Sage | `#4A6B57` | calm, natural, understated |
+| Bronze | `#8A5A3C` | warm, crafted, executive |
+| Petrol | `#0F5C63` | deep teal, composed, modern |
+| Burgundy | `#7A2E45` | refined, editorial, premium |
+| Silver | `#475569` | metallic, understated, enterprise |
+| Gold | `#A16207` | executive, premium, warm |
+
+**Vibrant** — brighter accents:
+
+| Palette | Primary (button) | Feel |
+|---|---|---|
+| Indigo (default) | `#4F46E5` | energetic, tech |
+| Ocean | `#0369A1` | clear, technology |
+| Emerald | `#047857` | fresh, growth |
+| Violet | `#6D28D9` | bold, creative |
+
+A palette overrides the accent tokens (`--c-primary*`, brand-gradient stops `--c-brand-1..3`, hero glows, gradient-text colours) via `<html data-palette="…">`. In **night mode** every palette also tints the surfaces — each is a soft, low-saturation charcoal with a hint of the palette hue (for example Navy slate-blue, Sage green-grey, Bronze warm brown, Petrol deep teal, Burgundy wine, Silver neutral graphite, Gold warm charcoal) — deliberately not near-black, with off-white text, to reduce eye strain — by overriding `--c-bg`, `--c-surface`, `--c-surface-2`, `--c-line`, `--c-fg` and `--c-muted`. Status colours stay shared. All combinations were checked against WCAG AA: white on buttons ≥ 5.2:1, link text ≥ 6.6:1 on light surfaces, and in night mode body text ≥ 10.3:1, muted text ≥ 5.6:1 and accent text ≥ 7.1:1. To add a palette: add one `:root[data-palette="name"]` block and one `:root.dark[data-palette="name"]` block in `frontend/src/index.css` and an entry in `PALETTES` (`frontend/src/context/ThemeContext.jsx`).
 
 Typography: **Plus Jakarta Sans** (fallback Inter / system UI). Scale — display `text-4xl–6xl extrabold`, page title `text-2xl/3xl extrabold`, card title `text-base bold`, body `15 px`, helper `13 px`. Letter-spacing `-0.02em` on headings.
 

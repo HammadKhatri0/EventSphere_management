@@ -33,7 +33,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <AuthShell title="Choose a new password" subtitle="Pick something strong that you don’t use elsewhere." footer={<Link to="/login" className="font-semibold text-primary-text hover:underline">Back to sign in</Link>}>
+    <AuthShell title="Choose a new password" subtitle="Pick something strong that you don’t use elsewhere." footer={<Link to="/login" className="inline-block py-1.5 font-semibold text-primary-text hover:underline">Back to sign in</Link>}>
       {!token ? <Alert tone="danger">This reset link is incomplete. Please request a new one from the <Link className="underline font-semibold" to="/forgot-password">forgot password</Link> page.</Alert> : (
         <form onSubmit={submit} noValidate className="space-y-5">
           {formError && <Alert tone="danger">{formError}</Alert>}

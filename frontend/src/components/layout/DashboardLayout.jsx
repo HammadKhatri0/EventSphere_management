@@ -59,7 +59,16 @@ export default function DashboardLayout({ nav, portal, settingsHref, notificatio
       ))}
     </nav>
   );
-  const brand = (<div className="h-16 flex items-center px-5 border-b border-line shrink-0"><Logo /><span className="ml-2 text-[11px] font-bold uppercase tracking-wider rounded-md bg-primary-soft text-primary-text px-1.5 py-0.5">{portal}</span></div>);
+  // Logo mark + two-line wordmark (name over portal label) so the row never outgrows the 256px sidebar
+  const brand = (
+    <div className="h-16 flex min-w-0 items-center gap-2.5 px-5 border-b border-line shrink-0">
+      <Logo compact />
+      <div className="min-w-0 leading-tight">
+        <p className="text-lg font-extrabold tracking-tight truncate">Event<span className="text-primary-text">Sphere</span></p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary-text">{portal}</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-dvh lg:pl-64">
@@ -70,7 +79,7 @@ export default function DashboardLayout({ nav, portal, settingsHref, notificatio
         <div className="lg:hidden fixed inset-0 z-50">
           <div className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden />
           <aside ref={drawer} className="absolute inset-y-0 left-0 w-72 max-w-[85vw] flex flex-col bg-surface border-r border-line" role="dialog" aria-modal="true" aria-label="Navigation">
-            <div className="flex items-center justify-between pr-2">{brand}<IconButton label="Close menu" icon={X} onClick={() => setOpen(false)} /></div>
+            <div className="flex items-center justify-between pr-2"><div className="flex-1 min-w-0">{brand}</div><IconButton label="Close menu" icon={X} onClick={() => setOpen(false)} /></div>
             {links}
           </aside>
         </div>

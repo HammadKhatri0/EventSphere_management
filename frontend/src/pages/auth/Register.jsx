@@ -67,7 +67,7 @@ export default function Register() {
   };
 
   return (
-    <AuthShell title="Create your account" subtitle="Choose how you’ll use EventSphere — you’ll be taken straight to your portal." footer={<>Already registered? <Link to="/login" className="font-semibold text-primary-text hover:underline">Sign in</Link></>}>
+    <AuthShell title="Create your account" subtitle="Choose how you’ll use EventSphere — you’ll be taken straight to your portal." footer={<>Already registered? <Link to="/login" className="inline-block py-1.5 font-semibold text-primary-text hover:underline">Sign in</Link></>}>
       <form onSubmit={submit} noValidate className="space-y-4">
         <RoleSelector value={role} onChange={setRole} legend="I am registering as" />
         {formError && <Alert tone="danger">{formError}</Alert>}
@@ -82,7 +82,7 @@ export default function Register() {
         </div>
         <Input label="Confirm password" type="password" autoComplete="new-password" icon={Lock} required {...bind('confirm')} />
         <Checkbox checked={values.consent} onChange={(e) => set('consent', e.target.checked)} error={errors.consent}
-          label={<>I agree to the <span className="font-semibold">Terms of Service</span> and consent to my data being processed as described in the <span className="font-semibold">Privacy Policy</span>.</>} />
+          label={<>I agree to the <Link to="/terms" target="_blank" className="font-semibold text-primary-text underline">Terms of Service</Link> and consent to my data being processed as described in the <Link to="/privacy" target="_blank" className="font-semibold text-primary-text underline">Privacy Policy</Link>.</>} />
         <Checkbox checked={values.marketingConsent} onChange={(e) => set('marketingConsent', e.target.checked)} label="Send me occasional product and event updates (optional)." />
         <Button type="submit" size="lg" className="w-full" loading={busy}>Create account</Button>
       </form>

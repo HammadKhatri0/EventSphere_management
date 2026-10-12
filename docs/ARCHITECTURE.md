@@ -203,7 +203,7 @@ EventSphere_management/
         │   ├── charts/             ← LineChart, BarList, Donut
         │   └── FloorPlan.jsx       ← interactive SVG floor plan (admin/select/view/heatmap)
         └── pages/
-            ├── Landing.jsx
+            ├── Landing.jsx · About.jsx · Info.jsx (Privacy / Terms / Help) · CtaBanner.jsx · LandingArt.jsx
             ├── auth/               ← Login, Register, Forgot/Reset password, role selector
             ├── admin/              ← Organizer portal: Dashboard, Expos, ExpoForm, FloorPlanManager,
             │                         Applications, Schedule, Analytics, Support, FeedbackAdmin, Users, shared.jsx

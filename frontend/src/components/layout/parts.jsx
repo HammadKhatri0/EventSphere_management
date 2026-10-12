@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Bell, CheckCheck, LogOut, Moon, Settings, Sun, UserCircle } from 'lucide-react';
+import { Bell, Check, CheckCheck, LogOut, Moon, Palette, Settings, Sun, UserCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { get, patch, post } from '../../lib/api.js';
 import { cn, timeAgo, ROLE_LABEL } from '../../lib/utils.js';
 import { useAuth } from '../../context/AuthContext.jsx';
-import { useTheme } from '../../context/ThemeContext.jsx';
+import { PALETTES, useTheme } from '../../context/ThemeContext.jsx';
 import { useSocketEvent } from '../../hooks/index.js';
 import { Avatar, IconButton } from '../ui/index.jsx';
 
@@ -21,9 +21,55 @@ export function Logo({ className, compact }) {
   );
 }
 
+/** Light/dark switch plus the colour-palette picker. */
 export function ThemeToggle() {
   const { theme, toggle } = useTheme();
-  return <IconButton label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} icon={theme === 'dark' ? Sun : Moon} onClick={toggle} aria-pressed={theme === 'dark'} />;
+  return (
+    <>
+      <PaletteMenu />
+      <IconButton label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} icon={theme === 'dark' ? Sun : Moon} onClick={toggle} aria-pressed={theme === 'dark'} />
+    </>
+  );
+}
+
+function PaletteMenu() {
+  const { palette, setPalette } = useTheme();
+  const { open, setOpen, ref } = usePopover();
+  const onKey = (e) => {
+    const i = PALETTES.findIndex((p) => p.id === palette);
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (step) { e.preventDefault(); setPalette(PALETTES[(i + step + PALETTES.length) % PALETTES.length].id); }
+  };
+  return (
+    <div className="relative" ref={ref}>
+      <IconButton label="Choose colour palette" icon={Palette} aria-haspopup="true" aria-expanded={open} onClick={() => setOpen((o) => !o)} />
+      {open && (
+        <div className="absolute right-0 mt-2 w-72 max-w-[92vw] max-h-[75vh] overflow-y-auto card shadow-2xl z-40 p-3">
+          <p id="palette-label" className="text-sm font-bold px-1 pb-1">Colour palette</p>
+          <div role="radiogroup" aria-labelledby="palette-label" onKeyDown={onKey} className="space-y-3">
+            {['Refined', 'Vibrant'].map((group) => (
+              <div key={group}>
+                <p className="px-1 pb-1.5 text-[11px] font-bold uppercase tracking-wider text-muted">{group}{group === 'Refined' ? ' · muted & premium' : ''}</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {PALETTES.filter((p) => p.group === group).map((p) => {
+                    const active = p.id === palette;
+                    return (
+                      <button key={p.id} type="button" role="radio" aria-checked={active} tabIndex={active ? 0 : -1} onClick={() => setPalette(p.id)}
+                        className={cn('flex items-center gap-2.5 rounded-xl border px-2.5 py-2 text-sm font-semibold transition', active ? 'border-primary bg-primary-soft text-primary-text' : 'border-line hover:bg-surface-2')}>
+                        <span className="size-5 rounded-full grid place-items-center shrink-0 ring-1 ring-black/10" style={{ background: p.color }}>{active && <Check className="size-3 text-white" aria-hidden />}</span>
+                        {p.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-muted px-1 pt-2.5">Works in light and dark mode. Saved on this device.</p>
+        </div>
+      )}
+    </div>
+  );
 }
 
 /** Closes a popover on outside click / Escape. */
@@ -99,7 +145,7 @@ export function UserMenu({ settingsHref }) {
     <div className="relative" ref={ref}>
       <button type="button" onClick={() => setOpen((o) => !o)} aria-haspopup="true" aria-expanded={open} aria-label="Account menu" className="flex items-center gap-2 rounded-xl p-1 pr-2 hover:bg-surface-2 transition">
         <Avatar name={user?.name} src={user?.avatar} size="sm" />
-        <span className="hidden md:block text-left leading-tight"><span className="block text-sm font-semibold max-w-32 truncate">{user?.name}</span><span className="block text-xs text-muted">{ROLE_LABEL[user?.role]}</span></span>
+        <span className="hidden xl:block text-left leading-tight"><span className="block text-sm font-semibold max-w-32 truncate">{user?.name}</span><span className="block text-xs text-muted">{ROLE_LABEL[user?.role]}</span></span>
       </button>
       {open && (
         <div className="absolute right-0 mt-2 w-60 card shadow-2xl z-40 p-1.5">

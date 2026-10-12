@@ -96,7 +96,7 @@ export function Checkbox({ label, error, className, ...rest }) {
   return (
     <div className={className}>
       <label htmlFor={id} className="flex items-start gap-2.5 text-sm cursor-pointer">
-        <input id={id} type="checkbox" className="mt-0.5 size-4.5 rounded border-line accent-[var(--c-primary)]" aria-invalid={!!error} {...rest} />
+        <input id={id} type="checkbox" className="mt-0.5 size-5 shrink-0 rounded border-line accent-[var(--c-primary)]" aria-invalid={!!error} {...rest} />
         <span>{label}</span>
       </label>
       {error && <p role="alert" className="text-[13px] text-danger-text mt-1">{error}</p>}
@@ -144,8 +144,8 @@ export function FileUpload({ label, kind = 'image', value, onChange, onUploaded,
   return (
     <div className={cn('space-y-1.5', className)}>
       {label && <label htmlFor={id} className="block text-sm font-semibold">{label}</label>}
-      <div className="flex items-center gap-3">
-        {kind === 'image' && value && <img src={assetUrl(value)} alt="" className="size-14 rounded-xl object-cover border border-line" />}
+      <div className="flex flex-wrap items-center gap-3">
+        {kind === 'image' && value && <img src={assetUrl(value)} alt="" className="size-14 shrink-0 rounded-xl object-cover border border-line" />}
         <Button variant="secondary" size="sm" icon={Upload} loading={busy} onClick={() => ref.current?.click()}>{buttonText || (value ? 'Replace' : 'Upload')}</Button>
         {value && kind === 'image' && <Button variant="ghost" size="sm" onClick={() => onChange?.('')}>Remove</Button>}
         <input ref={ref} id={id} type="file" hidden onChange={pick} accept={accept || (kind === 'image' ? 'image/png,image/jpeg,image/webp,image/gif' : 'application/pdf,image/png,image/jpeg,image/webp')} />
@@ -266,7 +266,7 @@ export function StatCard({ label, value, icon: Icon, tone = 'primary', hint, for
         <p className="text-sm font-semibold text-muted">{label}</p>
         {Icon && <span className={cn('size-9 rounded-xl grid place-items-center', STAT_TONES[tone])}><Icon className="size-[18px]" aria-hidden /></span>}
       </div>
-      <p className="mt-3 text-3xl font-extrabold tracking-tight tabular-nums"><span ref={ref}>{format ? format(value) : fmtNumber(value)}</span></p>
+      <p className="mt-3 text-2xl xl:text-3xl font-extrabold tracking-tight tabular-nums break-words"><span ref={ref}>{format ? format(value) : fmtNumber(value)}</span></p>
       {hint && <p className="text-[13px] text-muted mt-1">{hint}</p>}
     </>
   );
@@ -344,7 +344,7 @@ export function Pagination({ pagination, onPage }) {
 export function DataTable({ columns, rows, rowKey = '_id', empty, onRowClick, caption }) {
   if (!rows?.length) return empty || null;
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <table className="w-full text-sm">
         {caption && <caption className="sr-only">{caption}</caption>}
         <thead>

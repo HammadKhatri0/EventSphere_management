@@ -28,7 +28,7 @@ export default function ForgotPassword() {
 
   return (
     <AuthShell title="Forgot your password?" subtitle="Enter your email and we’ll send you a link to choose a new one."
-      footer={<Link to="/login" className="inline-flex items-center gap-1.5 font-semibold text-primary-text hover:underline"><ArrowLeft className="size-4" aria-hidden />Back to sign in</Link>}>
+      footer={<Link to="/login" className="inline-flex items-center gap-1.5 py-1.5 font-semibold text-primary-text hover:underline"><ArrowLeft className="size-4" aria-hidden />Back to sign in</Link>}>
       {done ? (
         <div className="space-y-4" role="status">
           <div className="size-14 rounded-2xl bg-success-soft text-success-text grid place-items-center"><MailCheck className="size-7" aria-hidden /></div>

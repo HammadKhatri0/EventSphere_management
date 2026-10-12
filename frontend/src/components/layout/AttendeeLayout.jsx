@@ -20,14 +20,14 @@ export default function AttendeeLayout() {
     <div className="min-h-dvh pb-20 md:pb-0">
       <a href="#main" className="skip-link">Skip to content</a>
       <header className="sticky top-0 z-30 bg-bg/80 backdrop-blur-lg border-b border-line">
-        <div className="max-w-[1280px] mx-auto h-16 px-4 sm:px-6 flex items-center gap-4">
-          <Link to="/attendee" aria-label="EventSphere home"><Logo /></Link>
-          <nav aria-label="Main" className="hidden md:flex items-center gap-1 ml-4">
+        <div className="max-w-[1280px] mx-auto h-16 px-4 sm:px-6 flex items-center gap-2 sm:gap-4">
+          <Link to="/attendee" aria-label="EventSphere home"><span className="sm:hidden"><Logo compact /></span><span className="hidden sm:inline"><Logo /></span></Link>
+          <nav aria-label="Main" className="hidden md:flex items-center gap-1 ml-2 lg:ml-4 flex-1 min-w-0 overflow-x-auto [scrollbar-width:none]">
             {NAV.map((i) => (
-              <NavLink key={i.to} to={i.to} end={i.end} className={({ isActive }) => cn('px-3 py-2 rounded-xl text-sm font-semibold transition', isActive ? 'bg-primary-soft text-primary-text' : 'text-muted hover:text-fg hover:bg-surface-2')}>{i.label}</NavLink>
+              <NavLink key={i.to} to={i.to} end={i.end} className={({ isActive }) => cn('shrink-0 whitespace-nowrap px-3 py-2 rounded-xl text-sm font-semibold transition', isActive ? 'bg-primary-soft text-primary-text' : 'text-muted hover:text-fg hover:bg-surface-2')}>{i.label}</NavLink>
             ))}
           </nav>
-          <div className="ml-auto flex items-center gap-1"><ThemeToggle /><NotificationBell allHref="/attendee/notifications" /><UserMenu settingsHref="/attendee/settings" /></div>
+          <div className="ml-auto shrink-0 flex items-center gap-1"><ThemeToggle /><NotificationBell allHref="/attendee/notifications" /><UserMenu settingsHref="/attendee/settings" /></div>
         </div>
       </header>
 

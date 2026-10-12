@@ -77,7 +77,7 @@ function ExpoCard({ expo, application, canApply, onApply }) {
 
   return (
     <Card data-reveal className="overflow-hidden flex flex-col">
-      <div className="relative h-36 bg-gradient-to-br from-indigo-500 via-violet-500 to-cyan-500">
+      <div className="relative h-36 bg-gradient-to-br from-brand-2 via-brand-1 to-brand-3">
         {expo.banner && <img src={assetUrl(expo.banner)} alt="" loading="lazy" className="size-full object-cover" />}
         <div className="absolute inset-x-0 top-0 p-3 flex justify-between gap-2">
           {expo.status === 'ongoing' ? <StatusBadge status="ongoing" className="bg-surface" /> : <span />}

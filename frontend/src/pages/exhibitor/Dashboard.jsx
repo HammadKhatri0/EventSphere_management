@@ -39,10 +39,10 @@ function ParticipationCard({ application, booth }) {
         </div>
         <StatusBadge status={application.status} />
       </div>
-      <div className="rounded-xl bg-surface-2 p-3.5 flex items-center justify-between gap-3">
+      <div className="rounded-xl bg-surface-2 p-3.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <div className="min-w-0">
           <p className="text-xs uppercase tracking-wide text-muted font-semibold">Booth</p>
-          {booth ? <p className="font-bold text-lg leading-tight">{booth.code}<span className="text-sm font-medium text-muted"> · {booth.zone || booth.size}</span></p>
+          {booth ? <p className="font-bold text-lg leading-tight flex flex-wrap items-baseline gap-x-1.5">{booth.code}<span className="text-sm font-medium text-muted">· {booth.zone || booth.size}</span></p>
             : <p className="text-sm text-muted">{application.status === 'approved' ? 'Not reserved yet' : 'Available after approval'}</p>}
         </div>
         {booth && <StatusBadge status={booth.status} />}
@@ -56,8 +56,8 @@ function ProfileChecklist({ completeness, profile }) {
   return (
     <Card data-reveal className="p-5 lg:col-span-1">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-base font-bold flex items-center gap-2"><Building2 className="size-5 text-primary" aria-hidden />Profile completeness</h2>
-        <span className="text-2xl font-extrabold tabular-nums">{completeness}%</span>
+        <h2 className="text-base font-bold flex items-center gap-2 min-w-0"><Building2 className="size-5 shrink-0 text-primary" aria-hidden />Profile completeness</h2>
+        <span className="shrink-0 text-2xl font-extrabold tabular-nums">{completeness}%</span>
       </div>
       <div className="mt-3"><ProgressBar value={completeness} tone={completeness >= 80 ? 'success' : 'primary'} label="Profile completeness" /></div>
       {profile ? (
@@ -121,7 +121,7 @@ export default function Dashboard() {
         <section className="lg:col-span-2" aria-labelledby="participation-title">
           <div className="flex items-center justify-between mb-3">
             <h2 id="participation-title" className="text-base font-bold">Your participation</h2>
-            <Link to="/exhibitor/applications" className="text-sm font-semibold text-primary-text hover:underline">All applications</Link>
+            <Link to="/exhibitor/applications" className="inline-block py-1.5 text-sm font-semibold text-primary-text hover:underline">All applications</Link>
           </div>
           {data.applications.length === 0 ? (
             <Card data-reveal>

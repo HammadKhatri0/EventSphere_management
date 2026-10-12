@@ -46,7 +46,7 @@ export default function Login() {
   };
 
   return (
-    <AuthShell title="Welcome back" subtitle="Sign in to your EventSphere portal." footer={<>New to EventSphere? <Link to="/register" className="font-semibold text-primary-text hover:underline">Create an account</Link></>}>
+    <AuthShell title="Welcome back" subtitle="Sign in to your EventSphere portal." footer={<>New to EventSphere? <Link to="/register" className="inline-block py-1.5 font-semibold text-primary-text hover:underline">Create an account</Link></>}>
       <form onSubmit={submit} noValidate className="space-y-5">
         <RoleSelector value={role} onChange={setRole} />
         {formError && <Alert tone="danger">{formError}</Alert>}
@@ -57,11 +57,11 @@ export default function Login() {
             <button type="button" onClick={() => setShow((s) => !s)} aria-label={show ? 'Hide password' : 'Show password'} aria-pressed={show}
               className="absolute right-2 top-[34px] size-8 grid place-items-center rounded-lg text-muted hover:text-fg hover:bg-surface-2">{show ? <EyeOff className="size-4" /> : <Eye className="size-4" />}</button>
           </div>
-          <div className="text-right mt-1.5"><Link to="/forgot-password" className="text-sm font-semibold text-primary-text hover:underline">Forgot password?</Link></div>
+          <div className="text-right mt-1.5"><Link to="/forgot-password" className="inline-block py-1.5 text-sm font-semibold text-primary-text hover:underline">Forgot password?</Link></div>
         </div>
         <Button type="submit" size="lg" className="w-full" loading={busy}>Sign in as {{ admin: 'Organizer', exhibitor: 'Exhibitor', attendee: 'Attendee' }[role]}</Button>
         {import.meta.env.DEV && (
-          <button type="button" onClick={() => { set('email', DEMO[role][0]); set('password', DEMO[role][1]); }} className="w-full text-center text-xs text-muted hover:text-fg underline underline-offset-2">Fill demo credentials (development only)</button>
+          <button type="button" onClick={() => { set('email', DEMO[role][0]); set('password', DEMO[role][1]); }} className="w-full text-center text-xs text-muted hover:text-fg underline underline-offset-2 py-2">Fill demo credentials (development only)</button>
         )}
       </form>
     </AuthShell>

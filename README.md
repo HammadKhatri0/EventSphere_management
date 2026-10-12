@@ -8,7 +8,7 @@ A secure, real-time **expo & trade-show management platform** built with the **M
 | **Exhibitor** (`/exhibitor`) | Companies | Company profile (logo, catalog, documents), expo applications, **interactive booth selection & reservation**, booth showcase, staff management, visitor inquiries & appointments, B2B messaging with neighbouring exhibitors, support tickets |
 | **Attendee** (`/attendee`) | Visitors | Event homepage with countdown, advanced exhibitor search & filters, interactive floor-plan viewer to locate booths, session bookmarking/registration with reminder alerts, inquiry & appointment booking, personal agenda (+ calendar export), light/dark mode |
 
-Cross-cutting: role-based login/registration with portal selection, password reset, real-time updates (Socket.IO), notifications, feedback, GDPR tools (consent, data export, account erasure), WCAG-AA accessible UI, GSAP-powered animations.
+Cross-cutting: role-based login/registration with portal selection, password reset, real-time updates (Socket.IO), notifications, feedback, GDPR tools (consent, data export, account erasure), WCAG-AA accessible UI with light/dark mode and eleven colour palettes (muted "Refined" and brighter "Vibrant"), GSAP-powered animations.
 
 ## Quick start
 

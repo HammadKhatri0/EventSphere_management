@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { gsap, useGSAP, prefersReducedMotion, revealIn } from '../lib/motion.js';
+import { gsap, useGSAP, prefersReducedMotion, revealIn, ScrollTrigger } from '../lib/motion.js';
 import { getSocket, joinExpo } from '../lib/socket.js';
 import { get } from '../lib/api.js';
 
@@ -23,6 +23,33 @@ export function useReveal(selector = '[data-reveal]', deps = [], opts) {
     if (els.length) revealIn(els, opts);
   }, { scope: ref, dependencies: deps });
   return ref;
+}
+
+/**
+ * Scroll-reveal for public pages: every `.reveal-item` inside `scopeRef` fades/slides in when it scrolls into view.
+ * Desktop/tablet only (phones and full-page captures always see everything). Each item has its own trigger, so a
+ * stale section height can never leave content hidden, and a safety net reveals anything on screen after 4 s.
+ */
+export function useScrollReveal(scopeRef) {
+  useGSAP(() => {
+    if (prefersReducedMotion()) return undefined;
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 768px)', () => {
+      const items = gsap.utils.toArray('.reveal-item');
+      gsap.set(items, { opacity: 0, y: 36 });
+      ScrollTrigger.batch(items, {
+        start: 'top 92%',
+        once: true,
+        onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out', overwrite: true, clearProps: 'transform' }),
+      });
+      document.fonts?.ready.then(() => ScrollTrigger.refresh()); // web-font load changes heights
+      gsap.delayedCall(4, () => items.forEach((el) => {
+        if (+getComputedStyle(el).opacity < 0.05 && el.getBoundingClientRect().top < window.innerHeight) gsap.to(el, { opacity: 1, y: 0, duration: 0.5, clearProps: 'transform' });
+      }));
+      return () => gsap.set(items, { clearProps: 'opacity,transform' });
+    });
+    return () => mm.revert();
+  }, { scope: scopeRef });
 }
 
 /** Count a number up from 0 (GSAP). Returns a ref to attach to the element showing the number. */

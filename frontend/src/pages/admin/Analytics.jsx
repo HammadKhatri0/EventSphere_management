@@ -148,7 +148,7 @@ function Report({ expo }) {
               <li key={h.boothId} className="flex items-center gap-3">
                 <span className="size-7 rounded-lg bg-surface-2 grid place-items-center text-sm font-bold tabular-nums">{i + 1}</span>
                 <span className="font-semibold whitespace-nowrap">Booth {h.code}</span>
-                <StatusBadge status={h.status} className="hidden sm:inline-flex" />
+                <StatusBadge status={h.status} className="max-sm:hidden" />
                 <span className="ml-auto tabular-nums text-sm whitespace-nowrap"><span className="font-bold">{fmtNumber(h.visits)}</span> <span className="text-muted">visits</span></span>
               </li>
             ))}

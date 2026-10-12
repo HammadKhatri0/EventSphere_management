@@ -36,7 +36,7 @@ const dayBoundary = (day, end) => new Date(`${day}T${end ? '23:59:00' : '00:00:0
 export default function ExpoForm() {
   const { id } = useParams();
   const query = useQuery({ queryKey: ['expo', id], queryFn: () => get(`/expos/${id}`), enabled: !!id });
-  const back = <Link to="/admin/expos" className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted hover:text-fg mb-2"><ArrowLeft className="size-4" aria-hidden />All expos</Link>;
+  const back = <Link to="/admin/expos" className="inline-flex items-center gap-1.5 py-1.5 text-sm font-semibold text-muted hover:text-fg mb-1"><ArrowLeft className="size-4" aria-hidden />All expos</Link>;
 
   if (id && query.isLoading) return <><PageHeader title="Edit expo" back={back} /><PageLoader /></>;
   if (id && query.isError) return <><PageHeader title="Edit expo" back={back} /><ErrorState error={query.error} onRetry={query.refetch} /></>;

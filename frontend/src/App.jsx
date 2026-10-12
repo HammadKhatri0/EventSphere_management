@@ -17,6 +17,10 @@ const Register = L(() => import('./pages/auth/Register.jsx'));
 const ForgotPassword = L(() => import('./pages/auth/ForgotPassword.jsx'));
 const ResetPassword = L(() => import('./pages/auth/ResetPassword.jsx'));
 const NotFound = L(() => import('./pages/shared/NotFound.jsx'));
+const About = L(() => import('./pages/About.jsx'));
+const Privacy = L(() => import('./pages/Info.jsx').then((m) => ({ default: m.Privacy })));
+const Terms = L(() => import('./pages/Info.jsx').then((m) => ({ default: m.Terms })));
+const Help = L(() => import('./pages/Info.jsx').then((m) => ({ default: m.Help })));
 // shared
 const Notifications = L(() => import('./pages/shared/Notifications.jsx'));
 const AccountSettings = L(() => import('./pages/shared/AccountSettings.jsx'));
@@ -71,6 +75,10 @@ export default function App() {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/help" element={<Help />} />
         <Route element={<GuestOnly />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

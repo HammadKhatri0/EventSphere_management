@@ -24,9 +24,9 @@ export default function AuthShell({ title, subtitle, children, footer }) {
   return (
     <div ref={root} className="min-h-dvh grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
       <a href="#auth-main" className="skip-link">Skip to form</a>
-      <aside className="hidden lg:flex relative overflow-hidden flex-col justify-between p-12 text-white bg-gradient-to-br from-indigo-700 via-indigo-600 to-cyan-600">
+      <aside className="hidden lg:flex relative overflow-hidden flex-col justify-between p-12 text-white bg-gradient-to-br from-brand-1 via-brand-2 to-brand-3">
         <span className="as-orb absolute -top-24 -right-16 size-80 rounded-full bg-white/10 blur-2xl" aria-hidden />
-        <span className="as-orb absolute bottom-10 -left-20 size-72 rounded-full bg-cyan-300/20 blur-2xl" aria-hidden />
+        <span className="as-orb absolute bottom-10 -left-20 size-72 rounded-full bg-white/10 blur-2xl" aria-hidden />
         <Link to="/" className="relative z-10 inline-flex items-center gap-2.5 font-extrabold text-xl">
           <span className="size-10 rounded-xl bg-white/15 grid place-items-center backdrop-blur"><Sparkles className="size-5" aria-hidden /></span>EventSphere
         </Link>

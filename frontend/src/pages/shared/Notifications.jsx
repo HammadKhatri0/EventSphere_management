@@ -36,7 +36,7 @@ export default function Notifications() {
                 <p className="font-semibold">{n.title}</p>
                 {n.body && <p className="text-sm text-muted">{n.body}</p>}
                 <p className="text-xs text-muted mt-1">{timeAgo(n.createdAt)}</p>
-                {n.link && <Link to={n.link} onClick={() => !n.read && markRead.mutate(n._id)} className="text-sm font-semibold text-primary-text hover:underline mt-1 inline-block">Open</Link>}
+                {n.link && <Link to={n.link} onClick={() => !n.read && markRead.mutate(n._id)} className="text-sm font-semibold text-primary-text hover:underline inline-block py-1.5">Open</Link>}
               </div>
               {!n.read && <Button size="sm" variant="ghost" onClick={() => markRead.mutate(n._id)}>Mark read</Button>}
               <IconButton label="Delete notification" icon={Trash2} onClick={() => remove.mutate(n._id)} />
