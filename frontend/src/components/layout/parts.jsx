@@ -10,12 +10,10 @@ import { PALETTES, useTheme } from '../../context/ThemeContext.jsx';
 import { useSocketEvent } from '../../hooks/index.js';
 import { Avatar, IconButton } from '../ui/index.jsx';
 
-export function Logo({ className, compact }) {
+export function Logo({ className, compact, size = 'size-10' }) {
   return (
-    <span className={cn('inline-flex items-center gap-2.5 font-extrabold tracking-tight', className)}>
-      <span className="size-9 rounded-xl bg-primary grid place-items-center text-white shadow-md shadow-primary/30" aria-hidden>
-        <svg viewBox="0 0 32 32" className="size-6"><circle cx="16" cy="16" r="8" fill="none" stroke="currentColor" strokeWidth="2.5" /><ellipse cx="16" cy="16" rx="3.5" ry="8" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M8 16h16" stroke="currentColor" strokeWidth="2" /></svg>
-      </span>
+    <span className={cn('inline-flex items-center gap-2 font-extrabold tracking-tight', className)}>
+      <img src="/logo.png" alt="" width="40" height="40" className={cn(size, 'shrink-0 object-contain drop-shadow-sm')} aria-hidden="true" />
       {!compact && <span className="text-lg">Event<span className="text-primary-text">Sphere</span></span>}
     </span>
   );

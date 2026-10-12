@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { CalendarCheck2, Map, ShieldCheck, Sparkles } from 'lucide-react';
+import { CalendarCheck2, Map, ShieldCheck } from 'lucide-react';
 import { gsap, useGSAP, prefersReducedMotion } from '../../lib/motion.js';
 import { Logo, ThemeToggle } from '../../components/layout/parts.jsx';
 
@@ -28,7 +28,7 @@ export default function AuthShell({ title, subtitle, children, footer }) {
         <span className="as-orb absolute -top-24 -right-16 size-80 rounded-full bg-white/10 blur-2xl" aria-hidden />
         <span className="as-orb absolute bottom-10 -left-20 size-72 rounded-full bg-white/10 blur-2xl" aria-hidden />
         <Link to="/" className="relative z-10 inline-flex items-center gap-2.5 font-extrabold text-xl">
-          <span className="size-10 rounded-xl bg-white/15 grid place-items-center backdrop-blur"><Sparkles className="size-5" aria-hidden /></span>EventSphere
+          <span className="size-11 rounded-xl bg-white/90 grid place-items-center shadow-md"><img src="/logo.png" alt="" width="32" height="32" className="size-8 object-contain" aria-hidden="true" /></span>EventSphere
         </Link>
         <div className="relative z-10 max-w-md">
           <h2 className="text-4xl font-extrabold leading-tight text-white">Run unforgettable expos, end to end.</h2>

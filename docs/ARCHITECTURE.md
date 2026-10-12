@@ -190,7 +190,7 @@ EventSphere_management/
 │       ├── seed/seed.js            ← demo data
 │       └── scripts/                ← backup.js, restore.js, test-email.js
 └── frontend/                       ← React 19 + Vite + Tailwind v4 + GSAP  (View layer)
-    ├── index.html  vite.config.js  public/ (favicon, theme-init.js)
+    ├── index.html  vite.config.js  public/ (logo.png, theme-init.js)
     └── src/
         ├── main.jsx  App.jsx       ← providers + route table (role-guarded, lazy-loaded)
         ├── index.css               ← design tokens (light/dark), base styles

@@ -32,6 +32,7 @@ export default function FloorPlan({
 }) {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
+  const outerRef = useRef(null); // non-scrolling frame the hover card is positioned in (so it is never clipped by the plan's scroll box)
   const [zoom, setZoom] = useState(1);
   const [hover, setHover] = useState(null);
   const [drag, setDrag] = useState(null);
@@ -99,9 +100,12 @@ export default function FloorPlan({
   };
 
   const showTip = (e, b) => {
-    const wrap = wrapRef.current.getBoundingClientRect();
+    const box = outerRef.current.getBoundingClientRect();
     const r = e.currentTarget.getBoundingClientRect();
-    setHover({ b, left: r.left - wrap.left + r.width / 2, top: r.top - wrap.top });
+    const half = 110; // roughly half the card's width: keeps it inside the frame at the left/right edges
+    const left = Math.min(Math.max(r.left - box.left + r.width / 2, half), Math.max(half, box.width - half));
+    const above = r.top - box.top >= 110; // open below the booth when there is no room above (top row)
+    setHover({ b, left, top: above ? r.top - box.top : r.bottom - box.top, above });
   };
 
   const sorted = useMemo(() => [...booths].sort((a, b) => (a.y - b.y) || (a.x - b.x)), [booths]);
@@ -117,6 +121,7 @@ export default function FloorPlan({
         <button type="button" aria-label="Reset zoom" onClick={() => setZoom(1)} className="size-8 grid place-items-center rounded-lg border border-line bg-surface hover:bg-surface-2"><Maximize2 className="size-4" /></button>
       </div>
 
+      <div ref={outerRef} className="relative">
       <div ref={wrapRef} className="relative rounded-2xl border border-line bg-surface-2/50 overflow-auto max-h-[70vh]" onMouseLeave={() => setHover(null)}>
         <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} role="group" aria-label={label} style={{ width: `${zoom * 100}%`, minWidth: 560, display: 'block', touchAction: mode === 'admin' ? 'none' : 'auto' }}>
           <defs>
@@ -166,17 +171,17 @@ export default function FloorPlan({
             );
           })}
         </svg>
-
-        {hover && !drag && (
-          <div role="tooltip" className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full -mt-2 rounded-xl border border-line bg-surface px-3 py-2 text-xs shadow-xl whitespace-nowrap"
-            style={{ left: hover.left, top: hover.top }}>
-            <p className="font-bold text-sm">Booth {hover.b.code}{hover.b.zone && <span className="font-medium text-muted"> · {hover.b.zone}</span>}</p>
-            <p className="text-muted capitalize">{(STATUS_STYLE[hover.b.status] ? { available: 'Available', reserved: 'Pending approval', booked: 'Confirmed', blocked: 'Blocked' }[hover.b.status] : hover.b.status)} · {hover.b.size} ({hover.b.w}×{hover.b.h})</p>
-            {hover.b.exhibitor?.companyName && <p className="font-semibold">{hover.b.exhibitor.companyName}</p>}
-            {(showPrice || mode !== 'view') && hover.b.status === 'available' && <p className="font-semibold text-success-text">{fmtMoney(hover.b.price)}</p>}
-            {mode === 'heatmap' && heat && <p className="font-semibold">{heat[hover.b._id] || 0} visits</p>}
-          </div>
-        )}
+      </div>
+      {hover && !drag && (
+        <div role="tooltip" className={`pointer-events-none absolute z-20 -translate-x-1/2 ${hover.above ? '-translate-y-full -mt-2' : 'mt-2'} rounded-xl border border-line bg-surface px-3 py-2 text-xs shadow-xl whitespace-nowrap`}
+          style={{ left: hover.left, top: hover.top }}>
+          <p className="font-bold text-sm">Booth {hover.b.code}{hover.b.zone && <span className="font-medium text-muted"> · {hover.b.zone}</span>}</p>
+          <p className="text-muted capitalize">{(STATUS_STYLE[hover.b.status] ? { available: 'Available', reserved: 'Pending approval', booked: 'Confirmed', blocked: 'Blocked' }[hover.b.status] : hover.b.status)} · {hover.b.size} ({hover.b.w}×{hover.b.h})</p>
+          {hover.b.exhibitor?.companyName && <p className="font-semibold">{hover.b.exhibitor.companyName}</p>}
+          {(showPrice || mode !== 'view') && hover.b.status === 'available' && <p className="font-semibold text-success-text">{fmtMoney(hover.b.price)}</p>}
+          {mode === 'heatmap' && heat && <p className="font-semibold">{heat[hover.b._id] || 0} visits</p>}
+        </div>
+      )}
       </div>
       <p className="md:hidden text-xs text-muted mt-2">Swipe sideways to pan the plan, use + / − to zoom.</p>
       <FloorPlanLegend mode={mode} />
