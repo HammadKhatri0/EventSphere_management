@@ -45,7 +45,7 @@ This document maps the project's **security / privacy / reliability** requiremen
 
 ## 5. Transport & HTTP hardening
 
-* **Helmet** security headers (CSP `default-src 'none'` for the API, `X-Content-Type-Options`, `Referrer-Policy`, HSTS in production …), `x-powered-by` disabled.
+* **Helmet** security headers with two policies: the JSON API and `/uploads` get `default-src 'none'`; the single-page app (served by the backend in production) gets a strict allow-list — own scripts only (no inline scripts), Google Fonts, Cloudinary images and same-origin WebSockets, no framing, no plugins. Also `X-Content-Type-Options`, `Referrer-Policy`, HSTS in production …), `x-powered-by` disabled.
 * **CORS** allow-list from `CLIENT_URL` (credentials enabled only for those origins).
 * `Cache-Control: no-store` on all API responses.
 * Cookies: `Secure` in production, `HttpOnly`, `SameSite=Lax`, scoped to `/api/auth`.

@@ -78,4 +78,4 @@ npm run backup -- --keep=14    # keep only the 14 newest backups
 npm run restore -- <folder> [--drop]
 ```
 
-A first backup of the seeded database is stored in `backend/backups/`. In production also enable **Atlas Cloud Backup** (continuous snapshots + point-in-time restore) and schedule `npm run backup` with cron / Task Scheduler.
+`backend/backups/` is git-ignored (backups hold user records), so it exists only on the machine that ran `npm run backup`; include it manually in the eProject submission ZIP. Login sessions (`refreshtokens`) are deliberately excluded from backups. In production also enable **Atlas Cloud Backup** (continuous snapshots + point-in-time restore) and schedule `npm run backup` with cron / Task Scheduler.

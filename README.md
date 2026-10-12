@@ -75,5 +75,5 @@ docs/     Documentation set
 
 - [x] Complete source code (`backend/`, `frontend/`)
 - [x] Project documentation incl. login credentials (this file, `docs/`)
-- [x] Database backup (`backend/backups/` + `npm run backup` / `restore`)
+- [x] Database backup (run `npm run backup` in `backend/`, then add `backend/backups/` to the submission ZIP; it is git-ignored) + `npm run restore`
 - [ ] Video of the complete working application — record following the script in `docs/TESTING.md` §3

@@ -136,6 +136,10 @@ flowchart TB
 * The React hook `useLiveBooths` loads the plan over REST and then patches the React-Query cache from socket events — no polling.
 * Reminders: a scheduler ticks every 30 s and atomically claims due reminders (`reminderSent:false → true`) before notifying, so multiple instances never double-send.
 
+## 5a. Production serving
+
+In production the Express app also serves the built React app (`frontend/dist`): hashed assets are cached for a year, `index.html` is never cached, and any non-API path falls back to `index.html` so client-side routes work. `/api`, `/uploads` and `/socket.io` are excluded from the fallback (unknown API paths still return JSON 404s). Because the SPA and API share one origin, cookies need no cross-site settings and CORS is only a safeguard. See `DEPLOYMENT.md` §5a for hosting.
+
 ## 6. Key design decisions
 
 | Decision | Reason |
@@ -155,6 +159,7 @@ flowchart TB
 ```
 EventSphere_management/
 ├── README.md                       ← start here
+├── render.yaml                     ← Render hosting blueprint (single service)
 ├── docs/                           ← documentation set (this folder)
 │   ├── USER_GUIDE.md              ← step-by-step guide for every role
 │   ├── ARCHITECTURE.md · API.md · DATABASE.md · SECURITY.md
@@ -183,9 +188,9 @@ EventSphere_management/
 │       ├── sockets/index.js        ← Socket.IO server (rooms, auth)
 │       ├── utils/                  ← ApiError, asyncHandler, logger, helpers
 │       ├── seed/seed.js            ← demo data
-│       └── scripts/                ← backup.js, restore.js
+│       └── scripts/                ← backup.js, restore.js, test-email.js
 └── frontend/                       ← React 19 + Vite + Tailwind v4 + GSAP  (View layer)
-    ├── index.html  vite.config.js
+    ├── index.html  vite.config.js  public/ (favicon, theme-init.js)
     └── src/
         ├── main.jsx  App.jsx       ← providers + route table (role-guarded, lazy-loaded)
         ├── index.css               ← design tokens (light/dark), base styles

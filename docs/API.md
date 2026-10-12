@@ -53,6 +53,8 @@ Common status codes: `400` validation · `401` not authenticated · `403` not al
 | `POST /uploads/image` | 🔑 | multipart field `file` – PNG/JPEG/WebP/GIF ≤ 5 MB. Magic bytes are verified. |
 | `POST /uploads/document` | 🔑 | PDF or image ≤ 5 MB. Returns `{ url: "/uploads/<file>", name, size }`. |
 
+To **remove** an image, send an empty string (or `null`) for the field — supported for `logo`, product `image`, expo `banner`, user `avatar`, and for `website` / `contact.email` on the exhibitor profile.
+
 Files are stored on **Cloudinary** and `url` is the CDN delivery URL (`https://res.cloudinary.com/…`). Without Cloudinary credentials they are stored locally and served from `/uploads/*` (`url` = `/uploads/<file>`).
 
 ## Expos

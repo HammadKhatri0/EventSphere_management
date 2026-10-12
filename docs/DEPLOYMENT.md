@@ -56,6 +56,17 @@ On the login page choose the matching portal (Organizer / Exhibitor / Attendee) 
 
 Frontend (`frontend/.env`, optional): `VITE_API_URL` (default `/api`), `VITE_ASSET_BASE` (origin for `/uploads` and websockets when the API is on another domain).
 
+### Email (SMTP) setup
+
+Only password-reset emails use SMTP. Leave `SMTP_HOST` empty and the reset link is printed in the backend console (and, in development, shown on the *Forgot password* page). To send real mail set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` and `MAIL_FROM`, then verify with `npm run test:email`.
+
+| Provider | Host | Port | Credentials |
+|---|---|---|---|
+| Mailtrap (testing inbox, nothing is delivered) | `sandbox.smtp.mailtrap.io` | 2525 | username / password from the inbox's *SMTP Settings* tab |
+| Gmail | `smtp.gmail.com` | 587 | your address + a 16-character **app password** (2-step verification required) |
+| Brevo | `smtp-relay.brevo.com` | 587 | login + SMTP key |
+| SendGrid | `smtp.sendgrid.net` | 587 | user `apikey`, password = API key |
+
 ## 4. NPM scripts
 
 | Where | Command | Purpose |
@@ -63,7 +74,8 @@ Frontend (`frontend/.env`, optional): `VITE_API_URL` (default `/api`), `VITE_ASS
 | backend | `npm run dev` / `npm start` | Run API (watch / production) |
 | backend | `npm run seed [-- --force]` | Load demo data (`--force` wipes first) |
 | backend | `npm test` | Integration tests (in-memory MongoDB, never touches Atlas) |
-| backend | `npm run backup` / `npm run restore -- <folder>` | JSON backup & restore |
+| backend | `npm run backup` / `npm run restore -- <folder>` | JSON backup & restore (login sessions are never included) |
+| backend | `npm run test:email [-- you@mail.com]` | Send a test email with the SMTP settings from `.env` |
 | frontend | `npm run dev` | Vite dev server |
 | frontend | `npm run build` | Production bundle in `frontend/dist` (code-split, hashed assets) |
 
