@@ -1,6 +1,8 @@
 import { Link, NavLink } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { Logo, ThemeToggle } from './parts.jsx';
 import { Button } from '../ui/index.jsx';
+import { FOOTER_TAGLINE, SOCIAL_LINKS } from '../../lib/siteConfig.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { ROLE_HOME, cn } from '../../lib/utils.js';
 
@@ -30,21 +32,64 @@ export function SiteHeader({ overlay = false }) {
   );
 }
 
+const FOOTER_COLUMNS = [
+  { title: 'Platform', links: [['For organizers', '/login', 'admin'], ['For exhibitors', '/login', 'exhibitor'], ['For attendees', '/login', 'attendee'], ['Create an account', '/register']] },
+  { title: 'Resources', links: [['Help Center', '/help'], ['Get started', '/register'], ['Sign in', '/login']] },
+  { title: 'Company', links: [['About EventSphere', '/about'], ['Privacy Policy', '/privacy'], ['Terms of Service', '/terms']] },
+];
+
 export function PublicFooter() {
   return (
-    <footer className="border-t border-line py-8 text-sm text-muted">
-      <div className="max-w-6xl mx-auto px-5 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
-        <div className="flex items-center gap-4">
-          <Link to="/" aria-label="EventSphere home"><Logo compact /></Link>
-          <span className="h-5 w-px bg-line hidden sm:block" aria-hidden />
-          <span>© {new Date().getFullYear()} EventSphere Management. All rights reserved.</span>
+    <footer className="relative overflow-hidden border-t border-line/60 bg-gradient-to-b from-transparent to-primary/[0.06] dark:to-black/30 text-sm">
+      <span className="absolute -right-32 -bottom-32 size-[26rem] rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
+      <span className="absolute -left-40 top-10 size-72 rounded-full bg-primary/5 blur-3xl pointer-events-none" aria-hidden />
+      <div className="relative max-w-6xl mx-auto px-5 pt-14 pb-8">
+        <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr_1.3fr]">
+          <div>
+            <Link to="/" aria-label="EventSphere home" className="inline-block"><Logo /></Link>
+            <p className="mt-4 text-muted max-w-xs leading-relaxed">{FOOTER_TAGLINE}</p>
+            {SOCIAL_LINKS.length > 0 && (
+              <ul className="mt-5 flex gap-2.5">
+                {SOCIAL_LINKS.map((l) => (
+                  <li key={l.label}>
+                    <a href={l.href} target="_blank" rel="noopener noreferrer" aria-label={l.label} className="size-10 grid place-items-center rounded-full border border-line bg-surface/60 text-xs font-bold text-muted hover:text-fg hover:border-primary transition">{l.short}</a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <nav aria-label="Footer" className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-8">
+            {FOOTER_COLUMNS.map((col) => (
+              <div key={col.title}>
+                <h2 className="text-sm font-bold text-fg">{col.title}</h2>
+                <ul className="mt-3 space-y-0.5">
+                  {col.links.map(([label, to, role]) => (
+                    <li key={label}><Link to={to} state={role ? { role } : undefined} className="inline-block py-1.5 text-muted hover:text-fg transition">{label}</Link></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
+
+          <div className="glass-card p-6 self-start">
+            <h2 className="text-base font-bold">Ready to run your expo?</h2>
+            <p className="mt-1.5 text-muted">Create a free account and explore EventSphere as an organizer, exhibitor or attendee.</p>
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
+              <Button to="/register" size="sm">Get started <ArrowRight className="size-4" aria-hidden /></Button>
+              <Button to="/login" size="sm" variant="secondary">Sign in</Button>
+            </div>
+          </div>
         </div>
-        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-0.5 font-medium">
-          <Link to="/about" className="inline-block py-1.5 hover:text-fg">About</Link>
-          <Link to="/privacy" className="inline-block py-1.5 hover:text-fg">Privacy Policy</Link>
-          <Link to="/terms" className="inline-block py-1.5 hover:text-fg">Terms of Service</Link>
-          <Link to="/help" className="inline-block py-1.5 hover:text-fg">Help Center</Link>
-        </nav>
+
+        <div className="mt-12 pt-6 border-t border-line/60 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 text-[13px] text-muted">
+          <p>© {new Date().getFullYear()} EventSphere Management. All rights reserved.</p>
+          <nav aria-label="Legal" className="flex flex-wrap gap-x-5">
+            <Link to="/terms" className="inline-block py-1 hover:text-fg">Terms of Service</Link>
+            <Link to="/privacy" className="inline-block py-1 hover:text-fg">Privacy Policy</Link>
+            <Link to="/help" className="inline-block py-1 hover:text-fg">Help Center</Link>
+          </nav>
+        </div>
       </div>
     </footer>
   );

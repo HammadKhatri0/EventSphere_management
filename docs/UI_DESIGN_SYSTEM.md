@@ -72,6 +72,7 @@ Booth colour code (also encoded by pattern + text so colour is never the only cu
 |---|---|
 | Primitives (`ui/`) | `Button`, `IconButton`, `Input`, `Textarea`, `Select`, `Checkbox`, `Toggle`, `SearchInput`, `FileUpload`, `Badge`/`StatusBadge`, `Avatar`, `ProgressBar`, `Tabs` (arrow-key nav), `Chips`, `Pagination`, `DataTable`, `Dl`, `Alert` |
 | Feedback | `Modal` (focus trap, Esc, scroll-lock, focus restore), `ConfirmModal`, toasts (Sonner), `Spinner`, `Skeleton`, `EmptyState`, `ErrorState` |
+| Public site | `SiteHeader`, `PublicFooter` (brand, link columns, call-to-action card, legal bar; optional social links and tagline come from `frontend/src/lib/siteConfig.js`), `CtaBanner` |
 | Layout | `DashboardLayout` (sidebar + top bar, mobile drawer), `AttendeeLayout` (top nav + mobile bottom tab bar), `PageTransition`, `Guards` (role routing) |
 | Domain | `FloorPlan` (+ legend), `StatCard`, charts (`LineChart`, `BarList`, `Donut`), `NotificationBell`, `ThemeToggle`, `UserMenu`, `RoleSelector` |
 
