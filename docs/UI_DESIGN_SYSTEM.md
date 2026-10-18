@@ -1,4 +1,4 @@
-# UI / UX Design System & Wireframes
+﻿# UI / UX Design System & Wireframes
 
 EventSphere serves three audiences through three dedicated portals that share one design system. This document covers the component breakdown, wireframes, the interactive floor-plan layouts and the Tailwind guidelines used to build them.
 
@@ -72,7 +72,7 @@ Booth colour code (also encoded by pattern + text so colour is never the only cu
 |---|---|
 | Primitives (`ui/`) | `Button`, `IconButton`, `Input`, `Textarea`, `Select`, `Checkbox`, `Toggle`, `SearchInput`, `FileUpload`, `Badge`/`StatusBadge`, `Avatar`, `ProgressBar`, `Tabs` (arrow-key nav), `Chips`, `Pagination`, `DataTable`, `Dl`, `Alert` |
 | Feedback | `Modal` (focus trap, Esc, scroll-lock, focus restore), `ConfirmModal`, toasts (Sonner), `Spinner`, `Skeleton`, `EmptyState`, `ErrorState` |
-| Public site | `SiteHeader`, `PublicFooter` (brand, link columns, call-to-action card, legal bar; optional social links and tagline come from `frontend/src/lib/siteConfig.js`), `CtaBanner` |
+| Public site | `SiteHeader`, `PublicFooter` (brand, link columns, call-to-action card, legal bar; social icons (Facebook, X, LinkedIn, Instagram, YouTube; currently each network's home page) and the tagline come from `frontend/src/lib/siteConfig.js`), `CtaBanner` |
 | Layout | `DashboardLayout` (sidebar + top bar, mobile drawer), `AttendeeLayout` (top nav + mobile bottom tab bar), `PageTransition`, `Guards` (role routing) |
 | Domain | `FloorPlan` (+ legend), `StatCard`, charts (`LineChart`, `BarList`, `Donut`), `NotificationBell`, `ThemeToggle`, `UserMenu`, `RoleSelector` |
 

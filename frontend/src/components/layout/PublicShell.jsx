@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { Logo, ThemeToggle } from './parts.jsx';
 import { Button } from '../ui/index.jsx';
 import { FOOTER_TAGLINE, SOCIAL_LINKS } from '../../lib/siteConfig.js';
@@ -32,6 +33,8 @@ export function SiteHeader({ overlay = false }) {
   );
 }
 
+const SOCIAL_ICONS = { facebook: FaFacebookF, x: FaXTwitter, linkedin: FaLinkedinIn, instagram: FaInstagram, youtube: FaYoutube };
+
 const FOOTER_COLUMNS = [
   { title: 'Platform', links: [['For organizers', '/login', 'admin'], ['For exhibitors', '/login', 'exhibitor'], ['For attendees', '/login', 'attendee'], ['Create an account', '/register']] },
   { title: 'Resources', links: [['Help Center', '/help'], ['Get started', '/register'], ['Sign in', '/login']] },
@@ -49,12 +52,18 @@ export function PublicFooter() {
             <Link to="/" aria-label="EventSphere home" className="inline-block"><Logo /></Link>
             <p className="mt-4 text-muted max-w-xs leading-relaxed">{FOOTER_TAGLINE}</p>
             {SOCIAL_LINKS.length > 0 && (
-              <ul className="mt-5 flex gap-2.5">
-                {SOCIAL_LINKS.map((l) => (
-                  <li key={l.label}>
-                    <a href={l.href} target="_blank" rel="noopener noreferrer" aria-label={l.label} className="size-10 grid place-items-center rounded-full border border-line bg-surface/60 text-xs font-bold text-muted hover:text-fg hover:border-primary transition">{l.short}</a>
-                  </li>
-                ))}
+              <ul className="mt-5 flex flex-wrap gap-2.5" aria-label="Social media">
+                {SOCIAL_LINKS.map((l) => {
+                  const Icon = SOCIAL_ICONS[l.id];
+                  return Icon && (
+                    <li key={l.id}>
+                      <a href={l.href} target="_blank" rel="noopener noreferrer" aria-label={`${l.label} (opens in a new tab)`} title={l.label}
+                        className="size-10 grid place-items-center rounded-full border border-line bg-surface/60 text-muted transition hover:text-white hover:bg-primary hover:border-primary hover:-translate-y-0.5">
+                        <Icon className="size-[18px]" aria-hidden />
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>
