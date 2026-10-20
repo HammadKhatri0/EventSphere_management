@@ -152,3 +152,21 @@ Notes for the free tier: the service sleeps after ~15 minutes without traffic an
 * **Logs:** production writes one JSON object per line (ingest with any log shipper); HTTP access log via `morgan combined`.
 * **Backups:** `npm run backup -- --keep=14` nightly + Atlas Cloud Backup. Test restores with `npm run restore`.
 * **Maintenance windows:** deploy new versions with `pm2 reload eventsphere` (zero-downtime in cluster mode); announce planned downtime to users in advance (99% uptime target).
+
+## 5b. Split hosting: API on Render, React app on Vercel
+
+`render.yaml` deploys only the Node API; `frontend/vercel.json` deploys the SPA and proxies `/api` and `/uploads` to Render, so the browser only ever talks to the Vercel origin and the httpOnly refresh cookie stays first-party (no `SameSite=None` needed). Only the WebSocket connects to Render directly, because Vercel rewrites cannot proxy WebSockets.
+
+1. **Render** — New → Blueprint → this repo, fill in the secrets (see §5a). Note the service URL (e.g. `https://eventsphere.onrender.com`). Health check: `/api/health`.
+2. **Edit `frontend/vercel.json`** — replace `https://eventsphere.onrender.com` (two places) with your Render URL if it differs, then commit and push.
+3. **Vercel** — Add New → Project → import the repo, set **Root Directory** to `frontend` (Vite is auto-detected: build `npm run build`, output `dist`), and add the environment variables:
+
+| Variable | Value |
+|---|---|
+| `VITE_API_URL` | `/api` |
+| `VITE_ASSET_BASE` | your Render URL (used for the WebSocket and `/uploads` links) |
+
+4. **Back on Render**, set `CLIENT_URL` to your Vercel URL (comma-separate extra domains, e.g. a custom domain) and redeploy: CORS, Socket.IO and password-reset links use it.
+5. Seed the database if it is empty (see §5a step 6).
+
+Notes: all requests reach Render from Vercel's servers, so the per-IP rate limiter sees a shared address; raise the limits in `backend/src/middleware/rateLimiters.js` if real traffic grows. The free Render service sleeps after ~15 minutes, so the first request after a pause is slow.

@@ -1,11 +1,11 @@
-# Render Blueprint: one web service that builds the React app and serves it from the Node API.
+# Render Blueprint: the Node API only. The React app is hosted on Vercel (frontend/vercel.json proxies /api and /uploads here).
 # Secrets marked `sync: false` are entered in the Render dashboard (never committed).
 services:
   - type: web
     name: eventsphere
     runtime: node
     plan: free
-    buildCommand: cd frontend && npm ci --include=dev && npm run build && cd ../backend && npm ci --omit=dev
+    buildCommand: cd backend && npm ci --omit=dev
     startCommand: cd backend && node src/server.js
     healthCheckPath: /api/health
     envVars:
@@ -16,7 +16,7 @@ services:
       - key: mongo_uri
         sync: false
       - key: CLIENT_URL
-        sync: false          # your public URL, e.g. https://eventsphere.onrender.com
+        sync: false          # your Vercel URL, e.g. https://eventsphere.vercel.app (CORS, websockets, reset links)
       - key: JWT_ACCESS_SECRET
         generateValue: true
       - key: JWT_REFRESH_SECRET
