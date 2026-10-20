@@ -225,7 +225,9 @@
   /* Landing page: glassy cards and glowing booth tiles */
   .glass-card { background: linear-gradient(135deg, color-mix(in srgb, var(--c-primary) 12%, var(--c-surface)), var(--c-surface) 70%); border: 1px solid color-mix(in srgb, var(--c-primary) 24%, var(--c-line)); border-radius: 1.25rem; box-shadow: var(--c-shadow); }
   /* Landing page backdrop: deep palette-tinted night sky with soft glows (light mode keeps the normal page colour) */
-  .landing-page { background: var(--c-bg); }
+  .landing-page { background: var(--c-bg); isolation: isolate; }
+  /* light mode: drop the hero's opaque base colour so the page-wide video shows through (its glows stay) */
+  .landing-page .hero-bg { background: radial-gradient(1200px 500px at 15% -10%, rgb(var(--c-glow-1) / 0.35), transparent 60%), radial-gradient(900px 400px at 95% 0%, rgb(var(--c-glow-2) / 0.25), transparent 60%); }
   .dark .landing-page {
     background:
       radial-gradient(1400px 760px at 90% -10%, rgb(var(--c-glow-1) / 0.42), transparent 64%),
@@ -234,6 +236,17 @@
       color-mix(in srgb, var(--c-bg) 52%, #030615);
   }
   .dark .landing-page .hero-bg { background: transparent; }
+  /* Page video: fixed behind the whole landing page (above the page backdrop, below all content). Footage is greyscaled and tinted with the
+     palette accent via a "color" blend (so every palette/mode gets its own hue); a scrim keeps copy readable. Pointer-transparent. */
+  .hero-video { --hv-base: var(--c-bg); position: fixed; inset: 0; z-index: -1; pointer-events: none; isolation: isolate; opacity: 0; transition: opacity 1.4s ease; }
+  .hero-video.is-ready { opacity: 0.3; }
+  .hero-video video { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(1.4) contrast(0.8); }
+  .hero-video::before { content: ''; position: absolute; inset: 0; z-index: 1; background: rgb(var(--c-glow-1)); mix-blend-mode: color; }
+  .hero-video::after { content: ''; position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(90deg, var(--hv-base) 0%, color-mix(in srgb, var(--hv-base) 55%, transparent) 45%, transparent 95%), color-mix(in srgb, var(--hv-base) 38%, transparent); }
+  .dark .hero-video { --hv-base: color-mix(in srgb, var(--c-bg) 52%, #030615); }
+  .dark .hero-video.is-ready { opacity: 0.55; }
+  .dark .hero-video video { filter: grayscale(1) brightness(1.15) contrast(1.1); }
   .landing-band { border-block: 1px solid color-mix(in srgb, var(--c-line) 75%, transparent); background: linear-gradient(180deg, color-mix(in srgb, var(--c-primary) 6%, transparent), color-mix(in srgb, var(--c-primary) 2%, transparent)); }
   .dark .glass-card {
     background: linear-gradient(135deg, rgb(var(--c-glow-1) / 0.28), rgb(var(--c-glow-1) / 0.09) 55%, rgb(var(--c-glow-2) / 0.10));

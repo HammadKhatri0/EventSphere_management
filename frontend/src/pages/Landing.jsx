@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BarChart3, Building2, CheckCircle2, ChevronRight, Map, ShieldCheck, Ticket, Users } from 'lucide-react';
 import { gsap, useGSAP, prefersReducedMotion } from '../lib/motion.js';
 import { PublicFooter, SiteHeader } from '../components/layout/PublicShell.jsx';
 import { useScrollReveal } from '../hooks/index.js';
 import { Button } from '../components/ui/index.jsx';
+import { cn } from '../lib/utils.js';
 import { ChartArt, FloorArt, HeroArcs, IdCardArt } from './LandingArt.jsx';
 import CtaBanner from './CtaBanner.jsx';
 
@@ -22,6 +23,33 @@ const ROLES = [
 
 // decorative mini floor plan (6 x 4)
 const STATUS = ['ok', 'bad', 'ok', 'wait', 'ok', 'ok', 'bad', 'ok', 'bad', 'ok', 'ok', 'bad', 'wait', 'bad', 'ok', 'ok', 'ok', 'wait', 'ok', 'bad', 'ok', 'ok', 'wait', 'bad'];
+
+/** Looping expo-hall footage fixed behind the whole page. Recoloured to the active palette in CSS (.hero-video), purely decorative. */
+function HeroVideo() {
+  const ref = useRef(null);
+  const [ready, setReady] = useState(false);
+  // honour reduced-motion and data-saver: those visitors just get the normal gradient backdrop
+  const [enabled] = useState(() => !prefersReducedMotion() && !navigator.connection?.saveData);
+
+  // only play while the hero is on screen
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) el.play().catch(() => {});
+      else el.pause();
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [enabled]);
+
+  if (!enabled) return null;
+  return (
+    <div aria-hidden className={cn('hero-video', ready && 'is-ready')}>
+      <video ref={ref} src="/hero-loop.mp4" autoPlay muted loop playsInline preload="auto" tabIndex={-1} disablePictureInPicture disableRemotePlayback onCanPlay={() => setReady(true)} />
+    </div>
+  );
+}
 
 function SectionHeading({ label, children, text }) {
   return (
@@ -55,6 +83,7 @@ export default function Landing() {
 
   return (
     <div ref={root} className="landing-page min-h-dvh">
+      <HeroVideo />
       <a href="#content" className="skip-link">Skip to content</a>
 
       <SiteHeader overlay />
