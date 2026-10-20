@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://eventsphere.onrender.com/api/:path*" },
-    { "source": "/uploads/:path*", "destination": "https://eventsphere.onrender.com/uploads/:path*" },
+    { "source": "/api/:path*", "destination": "https://eventsphere-management.onrender.com/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://eventsphere-management.onrender.com/uploads/:path*" },
     { "source": "/((?!assets/|.*\..*).*)", "destination": "/index.html" }
   ],
   "headers": [

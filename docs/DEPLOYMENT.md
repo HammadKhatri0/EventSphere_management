@@ -124,7 +124,7 @@ In production the Node API also serves the built React app, so one service hosts
 | Variable | Value |
 |---|---|
 | `mongo_uri` | your Atlas connection string (standard `mongodb://…` form works best) |
-| `CLIENT_URL` | the service URL, e.g. `https://eventsphere.onrender.com` (also used in password-reset links) |
+| `CLIENT_URL` | the service URL, e.g. `https://eventsphere-management.onrender.com` (also used in password-reset links) |
 | `ORGANIZER_INVITE_CODE` | a secret code for organizer sign-ups |
 | `CLOUD_NAME`, `CLOUD_API_KEY`, `CLOUD_API_SECRET` | Cloudinary credentials |
 | `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` | e.g. Mailtrap (testing) or a real provider (Brevo/SendGrid) for production |
@@ -157,8 +157,8 @@ Notes for the free tier: the service sleeps after ~15 minutes without traffic an
 
 `render.yaml` deploys only the Node API; `frontend/vercel.json` deploys the SPA and proxies `/api` and `/uploads` to Render, so the browser only ever talks to the Vercel origin and the httpOnly refresh cookie stays first-party (no `SameSite=None` needed). Only the WebSocket connects to Render directly, because Vercel rewrites cannot proxy WebSockets.
 
-1. **Render** — New → Blueprint → this repo, fill in the secrets (see §5a). Note the service URL (e.g. `https://eventsphere.onrender.com`). Health check: `/api/health`.
-2. **Edit `frontend/vercel.json`** — replace `https://eventsphere.onrender.com` (two places) with your Render URL if it differs, then commit and push.
+1. **Render** — New → Blueprint → this repo, fill in the secrets (see §5a). Note the service URL (e.g. `https://eventsphere-management.onrender.com`). Health check: `/api/health`.
+2. **Edit `frontend/vercel.json`** — replace `https://eventsphere-management.onrender.com` (two places) with your Render URL if it differs, then commit and push.
 3. **Vercel** — Add New → Project → import the repo, set **Root Directory** to `frontend` (Vite is auto-detected: build `npm run build`, output `dist`), and add the environment variables:
 
 | Variable | Value |
