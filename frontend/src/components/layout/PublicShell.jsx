@@ -43,7 +43,7 @@ const FOOTER_COLUMNS = [
 
 export function PublicFooter() {
   return (
-    <footer className="relative overflow-hidden border-t border-line/60 bg-gradient-to-b from-transparent to-primary/[0.06] dark:to-black/30 text-sm">
+    <footer className="relative overflow-hidden border-t border-line/60 bg-surface/80 backdrop-blur-md dark:bg-transparent dark:bg-gradient-to-b dark:from-transparent dark:to-black/30 text-sm">
       <span className="absolute -right-32 -bottom-32 size-[26rem] rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
       <span className="absolute -left-40 top-10 size-72 rounded-full bg-primary/5 blur-3xl pointer-events-none" aria-hidden />
       <div className="relative max-w-6xl mx-auto px-5 pt-14 pb-8">

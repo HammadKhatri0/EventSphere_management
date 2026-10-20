@@ -239,11 +239,11 @@
   /* Page video: fixed behind the whole landing page (above the page backdrop, below all content). Footage is greyscaled and tinted with the
      palette accent via a "color" blend (so every palette/mode gets its own hue); a scrim keeps copy readable. Pointer-transparent. */
   .hero-video { --hv-base: var(--c-bg); position: fixed; inset: 0; z-index: -1; pointer-events: none; isolation: isolate; opacity: 0; transition: opacity 1.4s ease; }
-  .hero-video.is-ready { opacity: 0.3; }
-  .hero-video video { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(1.4) contrast(0.8); }
+  .hero-video.is-ready { opacity: 0.5; }
+  .hero-video video { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(1) contrast(0.9); }
   .hero-video::before { content: ''; position: absolute; inset: 0; z-index: 1; background: rgb(var(--c-glow-1)); mix-blend-mode: color; }
   .hero-video::after { content: ''; position: absolute; inset: 0; z-index: 2;
-    background: linear-gradient(90deg, var(--hv-base) 0%, color-mix(in srgb, var(--hv-base) 55%, transparent) 45%, transparent 95%), color-mix(in srgb, var(--hv-base) 38%, transparent); }
+    background: linear-gradient(90deg, color-mix(in srgb, var(--hv-base) 85%, transparent) 0%, color-mix(in srgb, var(--hv-base) 45%, transparent) 45%, transparent 95%), color-mix(in srgb, var(--hv-base) 28%, transparent); }
   .dark .hero-video { --hv-base: color-mix(in srgb, var(--c-bg) 52%, #030615); }
   .dark .hero-video.is-ready { opacity: 0.55; }
   .dark .hero-video video { filter: grayscale(1) brightness(1.15) contrast(1.1); }

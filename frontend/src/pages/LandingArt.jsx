@@ -112,6 +112,41 @@ export function StackArt({ className }) {
   );
 }
 
+/** Companion to StackArt for the CTA banner's left edge: a frosted orb circled by a glass ring, with two small floating cubes. */
+export function OrbitArt({ className }) {
+  const pts = (arr) => arr.map((p) => p.join(',')).join(' ');
+  const Cube = ({ x, y, s }) => (
+    <g>
+      <polygon points={pts([[x, y], [x + s, y + s / 2], [x, y + s], [x - s, y + s / 2]])} fill="#ccfbf1" opacity="0.9" />
+      <polygon points={pts([[x - s, y + s / 2], [x, y + s], [x, y + 2 * s], [x - s, y + 1.5 * s]])} fill="url(#oa-cube-l)" />
+      <polygon points={pts([[x, y + s], [x + s, y + s / 2], [x + s, y + 1.5 * s], [x, y + 2 * s]])} fill="url(#oa-cube-r)" />
+    </g>
+  );
+  return (
+    <svg viewBox="0 0 220 192" className={className} aria-hidden="true" style={{ filter: 'drop-shadow(0 14px 22px rgba(8, 20, 80, 0.35))' }}>
+      <defs>
+        <radialGradient id="oa-orb" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stopColor="#ffffff" stopOpacity="0.95" /><stop offset="0.35" stopColor="#7dd3fc" stopOpacity="0.85" /><stop offset="1" stopColor="#0e7490" stopOpacity="0.9" /></radialGradient>
+        <linearGradient id="oa-cube-l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#5eead4" /><stop offset="1" stopColor="#0d9488" /></linearGradient>
+        <linearGradient id="oa-cube-r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#2dd4bf" /><stop offset="1" stopColor="#0f766e" /></linearGradient>
+      </defs>
+      <g transform="rotate(-18 110 100)" fill="none" stroke="rgba(255,255,255,0.8)">
+        <ellipse cx="110" cy="100" rx="96" ry="30" strokeWidth="1.2" strokeOpacity="0.35" />
+      </g>
+      <g style={{ filter: 'drop-shadow(0 0 14px rgba(125, 211, 252, 0.85))' }}>
+        <circle cx="110" cy="96" r="42" fill="url(#oa-orb)" stroke="rgba(255,255,255,0.7)" strokeWidth="1" />
+      </g>
+      <g transform="rotate(-18 110 100)" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="1.6" strokeLinecap="round">
+        <path d="M14 100 A96 30 0 0 0 206 100" />
+      </g>
+      <Cube x={184} y={28} s={13} />
+      <Cube x={34} y={132} s={10} />
+      <circle cx="42" cy="46" r="3" fill="#ffffff" opacity="0.8" />
+      <circle cx="198" cy="150" r="2.5" fill="#ffffff" opacity="0.7" />
+      <circle cx="150" cy="170" r="1.8" fill="#ffffff" opacity="0.6" />
+    </svg>
+  );
+}
+
 /** Thin concentric arcs sweeping in from the right edge of the hero (decorative backdrop). */
 export function HeroArcs({ className }) {
   const mask = 'linear-gradient(to left, black 25%, transparent 95%)';
