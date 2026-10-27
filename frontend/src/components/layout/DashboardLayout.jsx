@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { LogOut, Menu, X } from 'lucide-react';
+import { toast } from 'sonner';
 import { gsap, prefersReducedMotion } from '../../lib/motion.js';
 import { cn } from '../../lib/utils.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { Logo, NotificationBell, ThemeToggle, UserMenu } from './parts.jsx';
 import { IconButton } from '../ui/index.jsx';
 
@@ -27,6 +29,8 @@ export default function DashboardLayout({ nav, portal, settingsHref, notificatio
   const [open, setOpen] = useState(false);
   const drawer = useRef(null);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
@@ -39,6 +43,28 @@ export default function DashboardLayout({ nav, portal, settingsHref, notificatio
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
+
+  const handleLogout = async () => {
+    setOpen(false);
+    await logout();
+    toast.success('Signed out successfully');
+    navigate('/login', { replace: true });
+  };
+
+  const hasAccountGroup = nav.some((i) => (i.group || '').toLowerCase() === 'account');
+
+  const logoutButton = (
+    <li>
+      <button
+        type="button"
+        onClick={handleLogout}
+        className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition text-muted hover:bg-danger-soft hover:text-danger-text text-left"
+      >
+        <LogOut className="size-[18px] shrink-0" aria-hidden />
+        Log out
+      </button>
+    </li>
+  );
 
   const links = (
     <nav aria-label={`${portal} navigation`} className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
@@ -54,9 +80,18 @@ export default function DashboardLayout({ nav, portal, settingsHref, notificatio
                 </NavLink>
               </li>
             ))}
+            {group.toLowerCase() === 'account' && logoutButton}
           </ul>
         </div>
       ))}
+      {!hasAccountGroup && (
+        <div>
+          <p className="px-3 mb-1.5 text-[11px] font-bold uppercase tracking-wider text-muted">Account</p>
+          <ul className="space-y-0.5">
+            {logoutButton}
+          </ul>
+        </div>
+      )}
     </nav>
   );
   // Logo mark + two-line wordmark (name over portal label) so the row never outgrows the 256px sidebar
